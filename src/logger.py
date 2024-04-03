@@ -98,7 +98,8 @@ class Logger(object):
 				import wandb
 				wandb.init(project=project,
 						entity=entity,
-						name=str(cfg.seed),
+						# name=str(cfg.seed),
+						name=f'{cfg.task}_{cfg.seed}',
 						group=self._group,
 						tags=cfg_to_group(cfg, return_list=True) + [f'seed:{cfg.seed}'],
 						dir=self._log_dir,
@@ -115,6 +116,7 @@ class Logger(object):
 		return self._video
 
 	def finish(self, agent):
+		print("****** save_model ******", self._save_model)
 		if self._save_model:
 			fp = self._model_dir / f'model.pt'
 			torch.save(agent.state_dict(), fp)
